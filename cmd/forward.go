@@ -51,7 +51,8 @@ var forwardCmd = &cobra.Command{
 
         for {
             log.Printf("Starting port-forward for service %s on namespace %s with port mapping %s\n", service, namespace, portMapping)
-            if err := startPortForward(namespace, service, portMapping); err != nil {
+            portForwardCmd, err := startPortForward(namespace, service, portMapping)
+            if err != nil {
                 log.Printf("Error in port forwarding: %v, retrying in 5 seconds...", err)
                 time.Sleep(5 * time.Second)
                 continue
@@ -61,14 +62,26 @@ var forwardCmd = &cobra.Command{
             browser.OpenURL("http://localhost:10000")
 
             // Implement a check to see if the port-forwarding is still active
-
+            if err := monitorPortForward(portForwardCmd); err != nil {
+                log.Printf("Port forwarding stopped unexpectedly: %v, restarting in 5 seconds...", err)
+                time.Sleep(5 * time.Second)
+            }
         }
     },
 }
 
-func startPortForward(namespace, service, portMapping string) error {
+func monitorPortForward (cmd *exec.Cmd) error {
+    return cmd.Wait()
+}
+
+func startPortForward(namespace, service, portMapping string) (*exec.Cmd, error) {
     cmd := exec.Command("kubectl", "port-forward", service, "-n", namespace, portMapping)
-    return cmd.Run()
+    if err := cmd.Start(); err != nil {
+        return nil, err
+    }
+    
+    return cmd, nil
+    
 }
 
 
