@@ -5,6 +5,7 @@ import (
 	"os/exec"
 	"time"
 
+	"github.com/pkg/browser"
 	"github.com/spf13/cobra"
 )
 
@@ -55,7 +56,12 @@ var forwardCmd = &cobra.Command{
                 time.Sleep(5 * time.Second)
                 continue
             }
+
+            // Open the Argo UI in the default browser
+            browser.OpenURL("http://localhost:10000")
+
             // Implement a check to see if the port-forwarding is still active
+
         }
     },
 }
