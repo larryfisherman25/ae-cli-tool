@@ -59,10 +59,3 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 Acknowledgments
 
     Special thanks to everyone who contributed to the development and maintenance of this tool.
-
-
-### Notes:
-- **Customization**: You may need to adjust some sections to better fit your project's specifics, especially under "Features" and "Additional Commands".
-- **License Link**: Replace `[LICENSE](LICENSE)` with the actual link to your license file in the repository.
-- **Repository URL**: Make sure to replace `https://github.com/larryfisherman25/ae-cli-tool.git` with the actual URL of your repository.
-- **Acknowledgments**: You can add or remove acknowledgments as per your preference.
